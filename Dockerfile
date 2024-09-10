@@ -16,7 +16,7 @@ ENV SPARK_VERSION=3.3.2 \
     HADOOP_VERSION=3 \
     SPARK_HOME=/opt/spark \
     PYTHONHASHSEED=1 \
-    PYTHONPATH=${PYTHONPATH}:/opt/spark-apps \
+    PYTHONPATH=${PYTHONPATH}:/opt/spark-jobs \
     TZ=Asia/Taipei
 
 # Download and uncompress Spark from the Apache archive
