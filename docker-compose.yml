@@ -1,0 +1,90 @@
+version: "3.3"
+services:
+  spark-master:
+    image: cluster-apache-spark:3.3.2
+    container_name: spark-master
+    ports:
+      - "9090:8080"
+      - "7077:7077"
+    volumes:
+      - ./src:/opt/spark-jobs
+      - ./logs:/opt/spark-logs
+    environment:
+      - SPARK_LOCAL_IP=spark-master
+      - SPARK_WORKLOAD=master
+  spark-worker-a:
+    image: cluster-apache-spark:3.3.2
+    container_name: spark-worker-a
+    ports:
+      - "9091:8080"
+      - "7000:7000"
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=4
+      - SPARK_WORKER_MEMORY=16G
+      - SPARK_DRIVER_MEMORY=16G
+      - SPARK_EXECUTOR_MEMORY=16G
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-a
+    volumes:
+      - ./src:/opt/spark-jobs
+      - ./logs:/opt/spark-logs
+  spark-worker-b:
+    image: cluster-apache-spark:3.3.2
+    container_name: spark-worker-b
+    ports:
+      - "9092:8080"
+      - "7001:7000"
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=4
+      - SPARK_WORKER_MEMORY=16G
+      - SPARK_DRIVER_MEMORY=16G
+      - SPARK_EXECUTOR_MEMORY=16G
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-b
+    volumes:
+      - ./src:/opt/spark-jobs
+      - ./logs:/opt/spark-logs
+  spark-worker-c:
+    image: cluster-apache-spark:3.3.2
+    container_name: spark-worker-c
+    ports:
+      - "9093:8080"
+      - "7002:7000"
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=4
+      - SPARK_WORKER_MEMORY=16G
+      - SPARK_DRIVER_MEMORY=16G
+      - SPARK_EXECUTOR_MEMORY=16G
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-c
+    volumes:
+      - ./src:/opt/spark-jobs
+      - ./logs:/opt/spark-logs
+  spark-worker-d:
+    image: cluster-apache-spark:3.3.2
+    container_name: spark-worker-d
+    ports:
+      - "9094:8080"
+      - "7003:7000"
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=4
+      - SPARK_WORKER_MEMORY=16G
+      - SPARK_DRIVER_MEMORY=16G
+      - SPARK_EXECUTOR_MEMORY=16G
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-d
+    volumes:
+      - ./src:/opt/spark-jobs
+      - ./logs:/opt/spark-logs
