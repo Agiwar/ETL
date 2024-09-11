@@ -1,5 +1,4 @@
 import argparse
-import configparser
 import logging
 
 import pandas as pd
