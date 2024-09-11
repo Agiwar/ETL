@@ -1,5 +1,5 @@
-version: "3.3"
 services:
+
   spark-master:
     image: cluster-apache-spark:3.3.2
     container_name: spark-master
@@ -12,6 +12,7 @@ services:
     environment:
       - SPARK_LOCAL_IP=spark-master
       - SPARK_WORKLOAD=master
+
   spark-worker-a:
     image: cluster-apache-spark:3.3.2
     container_name: spark-worker-a
@@ -31,6 +32,7 @@ services:
     volumes:
       - ./src:/opt/spark-jobs
       - ./logs:/opt/spark/logs
+
   spark-worker-b:
     image: cluster-apache-spark:3.3.2
     container_name: spark-worker-b
@@ -50,6 +52,7 @@ services:
     volumes:
       - ./src:/opt/spark-jobs
       - ./logs:/opt/spark/logs
+
   spark-worker-c:
     image: cluster-apache-spark:3.3.2
     container_name: spark-worker-c
@@ -69,6 +72,7 @@ services:
     volumes:
       - ./src:/opt/spark-jobs
       - ./logs:/opt/spark/logs
+
   spark-worker-d:
     image: cluster-apache-spark:3.3.2
     container_name: spark-worker-d
