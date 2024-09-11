@@ -8,7 +8,7 @@ services:
       - "7077:7077"
     volumes:
       - ./src:/opt/spark-jobs
-      - ./logs:/opt/spark-logs
+      - ./logs:/opt/spark/logs
     environment:
       - SPARK_LOCAL_IP=spark-master
       - SPARK_WORKLOAD=master
@@ -30,7 +30,7 @@ services:
       - SPARK_LOCAL_IP=spark-worker-a
     volumes:
       - ./src:/opt/spark-jobs
-      - ./logs:/opt/spark-logs
+      - ./logs:/opt/spark/logs
   spark-worker-b:
     image: cluster-apache-spark:3.3.2
     container_name: spark-worker-b
@@ -49,7 +49,7 @@ services:
       - SPARK_LOCAL_IP=spark-worker-b
     volumes:
       - ./src:/opt/spark-jobs
-      - ./logs:/opt/spark-logs
+      - ./logs:/opt/spark/logs
   spark-worker-c:
     image: cluster-apache-spark:3.3.2
     container_name: spark-worker-c
@@ -68,7 +68,7 @@ services:
       - SPARK_LOCAL_IP=spark-worker-c
     volumes:
       - ./src:/opt/spark-jobs
-      - ./logs:/opt/spark-logs
+      - ./logs:/opt/spark/logs
   spark-worker-d:
     image: cluster-apache-spark:3.3.2
     container_name: spark-worker-d
@@ -87,4 +87,4 @@ services:
       - SPARK_LOCAL_IP=spark-worker-d
     volumes:
       - ./src:/opt/spark-jobs
-      - ./logs:/opt/spark-logs
+      - ./logs:/opt/spark/logs
