@@ -36,7 +36,7 @@ Follow the steps to run PySpark standalone clusters.
     ```
 + Run the service 
     ```bash
-    docker compose up -d
+    docker compose -f docker-compose.yml up -d
     ```
 + Stop the service
     ```bash
