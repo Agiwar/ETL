@@ -30,14 +30,11 @@ Follow the steps to run PySpark standalone clusters.
     + docker compose
 + ssh `VM's IP`
 + go to `/home/admin/ETL`
-+ Build the image
++ Build the image and run the service
     ```bash
-    docker build -t cluster-apache-spark:3.3.2 . 
+    docker compose -f docker-compose.yml up -d 
     ```
-+ Run the service 
-    ```bash
-    docker compose -f docker-compose.yml up -d
-    ```
+    
 + Stop the service
     ```bash
     docker compose down
