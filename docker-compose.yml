@@ -1,8 +1,11 @@
 services:
 
   spark-master:
-    image: cluster-apache-spark:3.3.2
     container_name: spark-master
+    build:
+      context: .
+      dockerfile: build/Dockerfile.spark
+    image: my_spark_standalone_cluster:latest
     ports:
       - "9090:8080"
       - "7077:7077"
@@ -14,8 +17,11 @@ services:
       - SPARK_WORKLOAD=master
 
   spark-worker-a:
-    image: cluster-apache-spark:3.3.2
     container_name: spark-worker-a
+    build:
+      context: .
+      dockerfile: build/Dockerfile.spark
+    image: my_spark_standalone_cluster:latest
     ports:
       - "9091:8080"
       - "7000:7000"
@@ -23,10 +29,10 @@ services:
       - spark-master
     environment:
       - SPARK_MASTER=spark://spark-master:7077
-      - SPARK_WORKER_CORES=4
-      - SPARK_WORKER_MEMORY=16G
-      - SPARK_DRIVER_MEMORY=16G
-      - SPARK_EXECUTOR_MEMORY=16G
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=1G
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-a
     volumes:
@@ -34,8 +40,11 @@ services:
       - ./logs:/opt/spark/logs
 
   spark-worker-b:
-    image: cluster-apache-spark:3.3.2
     container_name: spark-worker-b
+    build:
+      context: .
+      dockerfile: build/Dockerfile.spark
+    image: my_spark_standalone_cluster:latest
     ports:
       - "9092:8080"
       - "7001:7000"
@@ -43,10 +52,10 @@ services:
       - spark-master
     environment:
       - SPARK_MASTER=spark://spark-master:7077
-      - SPARK_WORKER_CORES=4
-      - SPARK_WORKER_MEMORY=16G
-      - SPARK_DRIVER_MEMORY=16G
-      - SPARK_EXECUTOR_MEMORY=16G
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=1G
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-b
     volumes:
@@ -54,8 +63,11 @@ services:
       - ./logs:/opt/spark/logs
 
   spark-worker-c:
-    image: cluster-apache-spark:3.3.2
     container_name: spark-worker-c
+    build:
+      context: .
+      dockerfile: build/Dockerfile.spark
+    image: my_spark_standalone_cluster:latest
     ports:
       - "9093:8080"
       - "7002:7000"
@@ -63,10 +75,10 @@ services:
       - spark-master
     environment:
       - SPARK_MASTER=spark://spark-master:7077
-      - SPARK_WORKER_CORES=4
-      - SPARK_WORKER_MEMORY=16G
-      - SPARK_DRIVER_MEMORY=16G
-      - SPARK_EXECUTOR_MEMORY=16G
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=1G
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-c
     volumes:
@@ -74,8 +86,11 @@ services:
       - ./logs:/opt/spark/logs
 
   spark-worker-d:
-    image: cluster-apache-spark:3.3.2
     container_name: spark-worker-d
+    build:
+      context: .
+      dockerfile: build/Dockerfile.spark
+    image: my_spark_standalone_cluster:latest
     ports:
       - "9094:8080"
       - "7003:7000"
@@ -83,10 +98,10 @@ services:
       - spark-master
     environment:
       - SPARK_MASTER=spark://spark-master:7077
-      - SPARK_WORKER_CORES=4
-      - SPARK_WORKER_MEMORY=16G
-      - SPARK_DRIVER_MEMORY=16G
-      - SPARK_EXECUTOR_MEMORY=16G
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=1G
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-d
     volumes:
