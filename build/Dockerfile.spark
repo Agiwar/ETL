@@ -1,5 +1,8 @@
 # builder step used to download and configure spark environment
-FROM openjdk:11.0.11-jre-slim-buster as builder
+ARG SPARK_VERSION="3.3.2" \
+    HADOOP_VERSION="3"
+
+FROM openjdk:11.0.11-jre-slim-buster AS builder
 
 # Add Dependencies for PySpark
 RUN apt-get update && \
@@ -12,9 +15,7 @@ RUN pip3 install --upgrade pip setuptools && \
     pip3 install -r requirements.txt
 
 # Fix the value of PYTHONHASHSEED
-ENV SPARK_VERSION=3.3.2 \
-    HADOOP_VERSION=3 \
-    SPARK_HOME=/opt/spark \
+ENV SPARK_HOME=/opt/spark \
     PYTHONHASHSEED=1 \
     PYTHONPATH=${PYTHONPATH}:/opt/spark-jobs \
     TZ=Asia/Taipei
