@@ -52,8 +52,9 @@ Follow the steps to run PySpark standalone clusters.
 + PySpark worker d: http://<VM's IP>:9094
 
 ### Resource Allocation
+Please note that the resource allocation below is for spark cluster deployed on production environment. For local usage, you can reduce the number to fit your machine.
 
-+ Default CPU cores allocation for each spark worker is 4 cores.
++ Default cores allocation for each spark worker is 4.
 + Default RAM for each spark-worker is 16 GB.
 + Default RAM for spark executors is 16 GB.
 + Default RAM for spark driver is 16 GB.
@@ -75,4 +76,4 @@ Follow the steps to run PySpark standalone clusters.
     docker exec spark-master bin/spark-submit --master spark://spark-master:7077 --executor-memory 16G --executor-cores 4 opt/spark-jobs/datasync/main.py -s source_db -t target_db -tab my_table -pk id -qry "SELECT * FROM my_table WHERE id BETWEEN 123 AND 456"
     ```
 
-+ Note: Before running the `ETL/src/etl/main.py` to sync the ODS data, please make sure the table you want to sync has been created in ClickHouse.
++ Note: Before running the file `ETL/src/etl/main.py` to sync the ODS data, please make sure the table you want to sync has been created in ClickHouse.
