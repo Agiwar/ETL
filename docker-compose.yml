@@ -10,7 +10,7 @@ services:
       - "9090:8080"
       - "7077:7077"
     volumes:
-      - ./src:/opt/spark-jobs
+      - .:/opt/spark/app-etl
       - ./logs:/opt/spark/logs
     environment:
       - SPARK_LOCAL_IP=spark-master
@@ -24,7 +24,7 @@ services:
     image: my_spark_standalone_cluster:latest
     ports:
       - "9091:8080"
-      - "7000:7000"
+      - "7001:7000"
     depends_on:
       - spark-master
     environment:
@@ -36,7 +36,7 @@ services:
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-a
     volumes:
-      - ./src:/opt/spark-jobs
+      - .:/opt/spark/app-etl
       - ./logs:/opt/spark/logs
 
   spark-worker-b:
@@ -47,7 +47,7 @@ services:
     image: my_spark_standalone_cluster:latest
     ports:
       - "9092:8080"
-      - "7001:7000"
+      - "7002:7000"
     depends_on:
       - spark-master
     environment:
@@ -59,7 +59,7 @@ services:
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-b
     volumes:
-      - ./src:/opt/spark-jobs
+      - .:/opt/spark/app-etl
       - ./logs:/opt/spark/logs
 
   spark-worker-c:
@@ -70,7 +70,7 @@ services:
     image: my_spark_standalone_cluster:latest
     ports:
       - "9093:8080"
-      - "7002:7000"
+      - "7003:7000"
     depends_on:
       - spark-master
     environment:
@@ -82,7 +82,7 @@ services:
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-c
     volumes:
-      - ./src:/opt/spark-jobs
+      - .:/opt/spark/app-etl
       - ./logs:/opt/spark/logs
 
   spark-worker-d:
@@ -93,7 +93,7 @@ services:
     image: my_spark_standalone_cluster:latest
     ports:
       - "9094:8080"
-      - "7003:7000"
+      - "7004:7000"
     depends_on:
       - spark-master
     environment:
@@ -105,5 +105,5 @@ services:
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-d
     volumes:
-      - ./src:/opt/spark-jobs
+      - .:/opt/spark/app-etl
       - ./logs:/opt/spark/logs
