@@ -83,12 +83,12 @@ class DataSync:
             "jdbc_url":    getattr(DATABASE_INFO.get(self.target_db), "JDBC"),
         }
 
-        conn_info = AttributeDict({
-            "source": AttributeDict(source_conn_info),
-            "target": AttributeDict(target_conn_info),
-        })
-
-        return conn_info
+        return AttributeDict(
+            {
+                "source": AttributeDict(source_conn_info),
+                "target": AttributeDict(target_conn_info),
+            }
+        )
 
     def action(self) -> Type[None]:
         spark_tool = SparkTool(self.spark)
@@ -147,7 +147,7 @@ def get_data_sync_details() -> list:
     sources: list[str] = [db for db in DATABASE_INFO if "ODS" not in db]
     targets: list[str] = [db for db in DATABASE_INFO if "ODS" in db]
 
-    data_sync_details = list()
+    data_sync_details = []
     for source in sources:
         db = source.split("_")[1]
 
