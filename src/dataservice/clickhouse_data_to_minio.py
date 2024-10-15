@@ -72,7 +72,7 @@ def upload_file_to_minio(data: pd.DataFrame, service_name: str) -> NoReturn:
 
     try:
         minio_client.put_object(
-            bucket_name=f"data-service",
+            bucket_name="data-service",
             object_name=f"{service_name}/{service_name}-{datetime_str}.csv",
             data=csv_buffer,
             length=len(csv_bytes),

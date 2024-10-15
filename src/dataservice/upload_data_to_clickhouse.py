@@ -18,9 +18,11 @@ def read_offline_csv(filename, columns_str=None, columns_datetime=None):
     if columns_datetime is not None:
         list_parse_dates = columns_datetime.split(",")
 
-    df = pd.read_csv(filepath_or_buffer=filename, dtype=dict_dtypes, parse_dates=list_parse_dates)
-
-    return df
+    return pd.read_csv(
+        filepath_or_buffer=filename,
+        dtype=dict_dtypes,
+        parse_dates=list_parse_dates,
+    )
 
 
 def clickhouse_connection(config):

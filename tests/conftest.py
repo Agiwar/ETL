@@ -17,11 +17,12 @@ def spark():
     }
     spark_jars_packages = AttributeDict(spark_jars_packages)
 
-    spark = (
+    return (
         SparkSession.builder
         .appName(app_name)
-        .config("spark.jars.packages", f"{spark_jars_packages.mssql},{spark_jars_packages.mysql},{spark_jars_packages.clickhouse}")
+        .config(
+            "spark.jars.packages",
+            f"{spark_jars_packages.mssql},{spark_jars_packages.mysql},{spark_jars_packages.clickhouse}",
+        )
         .getOrCreate()
     )
-
-    return spark

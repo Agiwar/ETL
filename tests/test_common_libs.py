@@ -35,10 +35,11 @@ def test_is_available_jdbc_driver():
 def test_extract_jdbc_dataframe(spark):
     spark_tool = SparkTool(spark)
 
+    query = "SELECT 1 AS one"
+
     for data_source, db_info in DATABASE_INFO.items():
         driver = ""
-        query = "SELECT 1 AS one"
-
+        
         if "MSSQL" in data_source:
             driver = DATABASE_CONNECTOR.MSSQL.DRIVER
         elif "MYSQL" in data_source:

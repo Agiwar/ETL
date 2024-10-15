@@ -31,30 +31,21 @@ class SparkTool:
 
     @staticmethod
     def is_spark_dataframe(obj: object) -> bool:
-        if not isinstance(obj, DataFrame):
-            return False
-
-        return True
+        return isinstance(obj, DataFrame)
 
     @staticmethod
     def is_available_jdbc_driver(driver: str) -> bool:
         from config.data_sync_config import DATABASE_CONNECTOR
 
         available_drivers = [db.DRIVER for db in DATABASE_CONNECTOR.values()]
-        if driver not in available_drivers:
-            return False
-
-        return True
+        return driver in available_drivers
 
     @staticmethod
     def is_available_data_source(data_source: str) -> bool:
         from config.data_sync_config import DATABASE_INFO
 
-        available_data_source = [db for db in DATABASE_INFO]
-        if data_source not in available_data_source:
-            return False
-
-        return True
+        available_data_source = list(DATABASE_INFO)
+        return data_source in available_data_source
 
     @staticmethod
     def legalize_jdbc_url(jdbc_url: str) -> str:
@@ -65,9 +56,9 @@ class SparkTool:
 
             for field, value in params.items():
                 if any(char in value for char in special_chars):
-                    params.update({field: parse.quote(value)})
+                    params[field] = parse.quote(value)
 
-            new_param = ["{}={}".format(k, v) for k, v in params.items()]
+            new_param = [f"{k}={v}" for k, v in params.items()]
             new_query = "&".join(new_param)
 
             parsed = parsed._replace(query=new_query)
@@ -93,9 +84,7 @@ class SparkTool:
             "url":    legalize_jdbc_url,
             "query":  query,
         }
-        df = self.spark.read.format("jdbc").options(**properties).load()
-
-        return df
+        return self.spark.read.format("jdbc").options(**properties).load()
 
     def load_jdbc_dataframe(
         self,
@@ -140,14 +129,11 @@ class SparkTool:
         query = f"SELECT count(*) AS counts, max({primary_key}) AS max_id FROM {table_name}"
         df = self.extract_jdbc_dataframe(jdbc_driver, jdbc_url, query)
 
-        values = [row for row in df.select("counts", "max_id").collect()][0]
+        values = list(df.select("counts", "max_id").collect())[0]
         data_records: int = values.counts
         max_id: int = values.max_id
 
-        if data_records < 100000:
-            return False, None
-
-        return True, max_id
+        return (False, None) if data_records < 100000 else (True, max_id)
 
     def all_data_sync(
         self,
@@ -200,7 +186,7 @@ class SparkTool:
         multiple = 100000
         upper_bound = math.ceil(max_id / multiple)
 
-        for i in range(0, upper_bound):
+        for i in range(upper_bound):
 
             condition_expr = f"{primark_key} > {i * multiple} AND {primark_key} <= {(i + 1) * multiple}"
             query = f"SELECT * FROM {table_name} WHERE {condition_expr}"
@@ -248,7 +234,7 @@ class SlackSession:
         self.webhook_url = webhook_url
 
     def send_message(self, message: str) -> requests.Response:
-        payload = dict()
+        payload = {}
 
         payload.update({
             "username": self.username,
@@ -257,8 +243,6 @@ class SlackSession:
         })
 
         try:
-            response = requests.post(self.webhook_url, json.dumps(payload))
-            return response
-
+            return requests.post(self.webhook_url, json.dumps(payload))
         except requests.exceptions.RequestException as e:
             raise SystemExit(e)
